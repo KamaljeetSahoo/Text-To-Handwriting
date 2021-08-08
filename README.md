@@ -1,6 +1,8 @@
 <h1 align="center">Text-To-Handwriting</h1>
 <p align="center">An unique Image Processing approach to convert Text to Handwrting 😛</p>
 
+## Hosted Demo can be checked <a href="https://share.streamlit.io/kamaljeetsahoo/text-to-handwriting/app.py">here</a>
+
 ### Built With
 
 * [OpenCV](https://opencv.org/)
