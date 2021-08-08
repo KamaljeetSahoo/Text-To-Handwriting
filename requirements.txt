@@ -1,4 +1,4 @@
-numpy==1.20.2
+opencv_python==4.5.3.56
 streamlit==0.80.0
-opencv-python==4.5.3.56
 fpdf==1.7.2
+numpy==1.20.2
