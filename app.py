@@ -1,4 +1,9 @@
 import streamlit as st
+import cv2
+import numpy as np
+import os
+import base64
+from fpdf import FPDF
 from utils import process_text, generate_images, generate_pdf
 
 st.header('Text to Handwritting')
