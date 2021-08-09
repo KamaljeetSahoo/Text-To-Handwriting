@@ -23,6 +23,8 @@ def generate_file_dict():
         file_dict[i] = chr(i)+'.png'
     for i in range(65, 91):
         file_dict[i] = chr(i).lower()+'upper.png'
+    for i in range(48, 58):
+        file_dict[i] = chr(i)+'.png'
     return file_dict
 
 
