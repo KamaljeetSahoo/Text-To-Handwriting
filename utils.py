@@ -29,9 +29,8 @@ def generate_file_dict():
 
 
 def process_text(input_text):
-    non_required_chars = {"'"}
     allowed_chars = set(
-        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.( )')
+        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.( )1234567890')
     process_text = ''
     for i in input_text:
         if i == '\n':
