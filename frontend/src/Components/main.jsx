@@ -7,8 +7,7 @@ export default class Main extends React.Component {
         super(props);
         this.state = {
             sketchShow: false,
-            data: null,
-            path: null
+            data: null
         }
     }
 
@@ -38,14 +37,7 @@ export default class Main extends React.Component {
         })
     }
 
-    handlePathData = (path) => {
-        this.setState({
-            path: path,
-        })
-    }
-
     render() {
-        console.log(this.state.path);
         return (
             <Container>
                 <Sketch 
@@ -53,7 +45,7 @@ export default class Main extends React.Component {
                     handleHandwritingData={this.handleHandwritingData} 
                     handleSketchClose={this.handleSketchClose}
                     handlePathData={this.handlePathData}
-                    path={this.state.path}
+                    data = {this.state.data}
                 />
                 <Row>
                     <Col>
