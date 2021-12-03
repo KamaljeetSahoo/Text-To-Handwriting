@@ -8,41 +8,43 @@ export default class Main extends React.Component {
         this.state = {
             sketchShow: false,
             data: {
-                A : new Array(2).fill(null),
-                B : new Array(2).fill(null),
-                C : new Array(2).fill(null),
-                D : new Array(2).fill(null),
-                E : new Array(2).fill(null),
-                F : new Array(2).fill(null),
-                G : new Array(2).fill(null),
-                H : new Array(2).fill(null),
-                I : new Array(2).fill(null),
-                J : new Array(2).fill(null),
-                K : new Array(2).fill(null),
-                L : new Array(2).fill(null),
-                M : new Array(2).fill(null),
-                N : new Array(2).fill(null),
-                O : new Array(2).fill(null),
-                P : new Array(2).fill(null),
-                Q : new Array(2).fill(null),
-                R : new Array(2).fill(null),
-                S : new Array(2).fill(null),
-                T : new Array(2).fill(null),
-                U : new Array(2).fill(null),
-                V : new Array(2).fill(null),
-                W : new Array(2).fill(null),
-                X : new Array(2).fill(null),
-                Y : new Array(2).fill(null),
-                Z : new Array(2).fill(null)
+                A : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                B : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                C : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                D : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                E : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                F : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                G : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                H : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                I : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                J : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                K : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                L : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                M : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                N : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                O : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                P : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                Q : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                R : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                S : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                T : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                U : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                V : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                W : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                X : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                Y : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
+                Z : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)]
             }
         }
     }
 
-    handleHandwritingData = (data) => {
-        this.setState({
-            data: data,
-            sketchShow: false,
-        })
+    handleHandwritingData = (character, dataU, dataL, dataUrlU, dataUrlL) => {
+        let newData = this.state.data;
+        newData[character][0][0] = dataU;
+        newData[character][0][1] = dataL;
+        newData[character][1][0] = dataUrlU;
+        newData[character][1][1] = dataUrlL;
+        this.setState({data: newData});
     }
 
     handleSketchClose = () => {
@@ -65,6 +67,7 @@ export default class Main extends React.Component {
     }
 
     render() {
+        console.log(this.state.data);
         return (
             <Container>
                 <Sketch 

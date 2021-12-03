@@ -11,7 +11,7 @@ export default class Controller extends React.Component {
                 </Col>
                 <Col>
                     <Form.Select aria-label="Default select example" value={this.props.selectedIndex} onChange={this.props.handleSelect}>
-                        {Array(26).fill(0).map((_, index) => (<option value={index}>{this.props.options[index]}</option>))}
+                        {Array(26).fill(0).map((_, index) => (<option key={index} value={index}>{this.props.options[index]}</option>))}
                     </Form.Select>
                 </Col>
                 <Col xs={2} className="center-align">

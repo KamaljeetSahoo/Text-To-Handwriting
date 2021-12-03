@@ -15,7 +15,7 @@ export default class Sketch extends React.Component {
 
   handleControl = (option) => {
     let index = this.state.selectedIndex;
-    this.setState({selectedIndex: option===0 ? (index - 1 > 0 ? index - 1 : index) : (index + 1 < 26 ? index + 1 : index)});
+    this.setState({selectedIndex: option===0 ? (index - 1 >= 0 ? index - 1 : index) : (index + 1 < 26 ? index + 1 : index)});
   }
 
   handleSelect = (event) => {
@@ -25,34 +25,55 @@ export default class Sketch extends React.Component {
   render() {
     return (
       <div>
-        <Modal show={this.props.sketchShow} onHide={this.props.handleSketchClose} centered>
+        <Modal show={this.props.sketchShow} onHide={this.props.handleSketchClose} centered size="lg">
           <Modal.Header closeButton>
-            <Modal.Title>Write A</Modal.Title>
+            <Modal.Title>Write {this.state.options[this.state.selectedIndex]}</Modal.Title>
           </Modal.Header>
           <Modal.Body className='center-align'>
-            <Container>
+            <Container className='modals' >
               <Controller selectedIndex={this.state.selectedIndex} handleControl={this.handleControl} options={this.state.options} handleSelect={this.handleSelect}/>
-              {/* <Row>
-                <Col>
+              <Row>
+                <Col  className='center-align' style={{flexDirection: "column"}}>
+                  Upper Case Canvas
                   <CanvasDraw
-                    ref={canvasDraw => (this.saveableCanvas = canvasDraw)}
+                    ref={canvasDraw => (this.upperCanvas = canvasDraw)}
                     brushColor={'#ffc600'}
                     brushRadius={1}
                     canvasHeight={300}
-                    saveData={this.props.data}
+                    canvasWidth={300}
+                    saveData={this.props.data[this.state.options[this.state.selectedIndex]][0][0]}
                   />
                 </Col>
-              </Row> */}
+                <Col  className='center-align' style={{flexDirection: "column"}}>
+                  Lower Case Canvas
+                  <CanvasDraw
+                    ref={canvasDraw => (this.lowerCanvas = canvasDraw)}
+                    brushColor={'#ffc600'}
+                    brushRadius={1}
+                    canvasHeight={300}
+                    canvasWidth={300}
+                    saveData={this.props.data[this.state.options[this.state.selectedIndex]][0][1]}
+                  />
+                </Col>
+              </Row>
             </Container>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={this.props.handleSketchClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={() => {
-              this.props.handleHandwritingData(this.saveableCanvas.getSaveData());
+            {this.state.selectedIndex!==0 && <Button variant="secondary" onClick={()=>{
+              this.props.handleHandwritingData(this.state.options[this.state.selectedIndex], this.upperCanvas.getSaveData(), this.lowerCanvas.getSaveData(), this.upperCanvas.getDataURL(), this.lowerCanvas.getDataURL());
+              this.upperCanvas.clear();
+              this.lowerCanvas.clear();
+              this.handleControl(0)
             }}>
-              Save Changes
+              Back
+            </Button>}
+            <Button variant="primary" onClick={() => {
+              this.props.handleHandwritingData(this.state.options[this.state.selectedIndex], this.upperCanvas.getSaveData(), this.lowerCanvas.getSaveData(), this.upperCanvas.getDataURL(), this.lowerCanvas.getDataURL());
+              this.upperCanvas.clear();
+              this.lowerCanvas.clear();
+              this.handleControl(1);
+            }}>
+              Next
             </Button>
           </Modal.Footer>
         </Modal>
