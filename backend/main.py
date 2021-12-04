@@ -30,11 +30,11 @@ def convertImage(np_arr):
         encoded_list.append(f"data:image/png;base64,{b64.decode()}")
     return encoded_list
 
-@app.route('/api', methods=['GET'])
+@app.route('/', methods=['GET'])
 def index():
     return "Hello"
 
-@app.route('/api/convert', methods=['POST'])
+@app.route('/convert', methods=['POST'])
 def convert():
     print("hey")
     data = request.get_json()

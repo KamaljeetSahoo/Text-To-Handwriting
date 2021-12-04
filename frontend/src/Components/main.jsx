@@ -85,7 +85,7 @@ export default class Main extends React.Component {
     handleConvert = (e) => {
         e.preventDefault();
         this.setState({ isLoading: true });
-        axios.post('/api/convert', {data: this.state.data, textData: this.state.textData }).then(res => {
+        axios.post('/convert', {data: this.state.data, textData: this.state.textData }).then(res => {
             this.setState({ isLoading: false });
             if(res.data.success) {
                 console.log(res.data);
