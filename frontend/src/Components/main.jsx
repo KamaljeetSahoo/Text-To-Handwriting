@@ -2,6 +2,7 @@ import React from 'react';
 import {Container, Row, Col, Form, Button, Carousel} from 'react-bootstrap';
 import Sketch from './SketchTool';
 import axios from 'axios';
+import Loader from './preLoader';
 
 export default class Main extends React.Component {
     constructor(props) {
@@ -10,6 +11,7 @@ export default class Main extends React.Component {
             sketchShow: false,
             textData: '',
             downloadPdf: '',
+            isLoading: false,
             data: {
                 A : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
                 B : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
@@ -82,7 +84,9 @@ export default class Main extends React.Component {
 
     handleConvert = (e) => {
         e.preventDefault();
+        this.setState({ isLoading: true });
         axios.post('/convert', {data: this.state.data, textData: this.state.textData }).then(res => {
+            this.setState({ isLoading: false });
             if(res.data.success) {
                 console.log(res.data);
                 this.setState({
@@ -91,6 +95,7 @@ export default class Main extends React.Component {
                 });
             }
         }).catch(err => {
+            this.setState({ isLoading: false });
             console.log(err);
         });
     }
@@ -98,6 +103,7 @@ export default class Main extends React.Component {
     render() {
         return (
             <Container>
+                <Loader isLoading={this.state.isLoading} />
                 <Sketch 
                     sketchShow={this.state.sketchShow} 
                     handleHandwritingData={this.handleHandwritingData} 
@@ -111,7 +117,7 @@ export default class Main extends React.Component {
                         <Form>
                             <Form.Group className="mb-3">
                                 <Form.Label>Enter your text here</Form.Label>
-                                <Form.Control as="textarea" rows={10} value={this.state.textData} onChange={(e)=>this.setState({textData: e.target.value})} />
+                                <Form.Control as="textarea" rows={15} value={this.state.textData} onChange={(e)=>this.setState({textData: e.target.value})} />
                             </Form.Group>
                             {this.state.textData !== '' && <div className="space-between">
                             <Button variant="primary" type="submit" onClick = {this.handleTextSubmit} className="buttons">
