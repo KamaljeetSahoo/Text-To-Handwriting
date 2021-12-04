@@ -22,7 +22,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://arcane-lake-20326.herokuapp.com",
   "eslintConfig": {
     "extends": [
       "react-app",

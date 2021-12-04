@@ -6,4 +6,5 @@ Werkzeug==1.0.1
 fpdf==1.7.2
 Flask==1.1.2
 Pillow==8.4.0
-streamlit==1.2.0
+gunicorn==20.1.0
+pymongo[srv]
