@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import {Modal, Button, Row, Col, Container} from 'react-bootstrap';
 import CanvasDraw from "react-canvas-draw";
 import Controller from "./controller";
@@ -68,6 +68,9 @@ export default class Sketch extends React.Component {
               Back
             </Button>}
             <Button variant="primary" onClick={() => {
+              if(this.upperCanvas.getSaveData() === "{\"lines\":[],\"width\":300,\"height\":300}" || this.lowerCanvas.getSaveData() === "{\"lines\":[],\"width\":300,\"height\":300}"){
+                return alert("Please write something!")
+              }
               this.props.handleHandwritingData(this.state.options[this.state.selectedIndex], this.upperCanvas.getSaveData(), this.lowerCanvas.getSaveData(), this.upperCanvas.getDataURL(), this.lowerCanvas.getDataURL());
               this.upperCanvas.clear();
               this.lowerCanvas.clear();

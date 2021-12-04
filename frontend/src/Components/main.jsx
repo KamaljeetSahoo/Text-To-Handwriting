@@ -1,12 +1,14 @@
 import React from 'react';
-import {Container, Row, Col, Form, Button} from 'react-bootstrap';
+import {Container, Row, Col, Form, Button, Carousel} from 'react-bootstrap';
 import Sketch from './SketchTool';
+import axios from 'axios';
 
 export default class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             sketchShow: false,
+            textData: '',
             data: {
                 A : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
                 B : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
@@ -34,8 +36,19 @@ export default class Main extends React.Component {
                 X : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
                 Y : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
                 Z : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)]
-            }
+            },
+            convertedData: []
         }
+    }
+
+    checkDataUrl = () => {
+        let nullList = []
+        Object.keys(this.state.data).forEach((item, index)=> {
+            if(this.state.data[item][1][0] === null || this.state.data[item][1][1]===null){
+                nullList.push(index);
+            }
+        })
+        console.log(nullList);
     }
 
     handleHandwritingData = (character, dataU, dataL, dataUrlU, dataUrlL) => {
@@ -66,8 +79,21 @@ export default class Main extends React.Component {
         })
     }
 
+    handleConvert = (e) => {
+        e.preventDefault();
+        axios.post('/convert', {data: this.state.data, textData: this.state.textData }).then(res => {
+            if(res.data.success) {
+                console.log(res.data);
+                this.setState({
+                    convertedData: res.data.image
+                });
+            }
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
     render() {
-        console.log(this.state.data);
         return (
             <Container>
                 <Sketch 
@@ -87,14 +113,39 @@ export default class Main extends React.Component {
                         <Form>
                             <Form.Group className="mb-3">
                                 <Form.Label>Enter your text here</Form.Label>
-                                <Form.Control as="textarea" rows={10} />
+                                <Form.Control as="textarea" rows={10} value={this.state.textData} onChange={(e)=>this.setState({textData: e.target.value})} />
                             </Form.Group>
+                            {this.state.textData !== '' && <>
                             <Button variant="primary" type="submit" onClick = {this.handleTextSubmit}>
-                                Submit
+                                Upload Handwriting
                             </Button>
+                            <Button variant="primary" type="submit" onClick = {this.handleConvert}>
+                                Convert
+                            </Button>
+                            </>}
                         </Form>
                     </Col>
                 </Row>
+                {this.state.convertedData.length>0 && <Row>
+                    <Col xs={4} className="center-align">
+                        <h3>PDF Preview</h3>
+                        <div className="carousel-border">
+                        <Carousel variant="dark">
+                            {this.state.convertedData.map((item, index) => {
+                                return (
+                                    <Carousel.Item key={index}>
+                                        <img
+                                            className="d-block w-100"
+                                            src={item}
+                                            alt="First slide"
+                                        />
+                                    </Carousel.Item>
+                                )
+                            })}
+                        </Carousel>
+                        </div>
+                    </Col>
+                </Row>}       
             </Container>
         );
     }

@@ -7,3 +7,9 @@
 .modals .row{
   margin-bottom: 20px;
 }
+
+.carousel-border {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}

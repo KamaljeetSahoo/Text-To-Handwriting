@@ -111,4 +111,4 @@ def generate_pdf(final_pages):
 
     b64 = base64.b64encode(val)
     filename = 'Output'
-    return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}.pdf">Download file</a>'
+    return f"data:application/octet-stream;base64,{b64.decode()}" 
