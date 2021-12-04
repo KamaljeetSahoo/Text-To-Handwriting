@@ -13,3 +13,12 @@
   border-radius: 5px;
   padding: 10px;
 }
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons{
+  width: 100px;
+}

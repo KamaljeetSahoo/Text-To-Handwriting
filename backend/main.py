@@ -41,7 +41,7 @@ def convert():
     text_data = data['textData']
     _, words = process_text(text_data)
     final_images = generate_images(words)
-    return dumps({'success': True, 'image': convertImage(final_images)})
+    return dumps({'success': True, 'image': convertImage(final_images), 'pdf': generate_pdf(final_images)})
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)

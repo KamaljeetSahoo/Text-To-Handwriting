@@ -9,6 +9,7 @@ export default class Main extends React.Component {
         this.state = {
             sketchShow: false,
             textData: '',
+            downloadPdf: '',
             data: {
                 A : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
                 B : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)],
@@ -38,7 +39,7 @@ export default class Main extends React.Component {
                 Z : [new Array(2).fill("{\"lines\":[],\"width\":300,\"height\":300}"), new Array(2).fill(null)]
             },
             convertedData: []
-        }
+        };
     }
 
     checkDataUrl = () => {
@@ -85,7 +86,8 @@ export default class Main extends React.Component {
             if(res.data.success) {
                 console.log(res.data);
                 this.setState({
-                    convertedData: res.data.image
+                    convertedData: res.data.image,
+                    downloadPdf: res.data.pdf
                 });
             }
         }).catch(err => {
@@ -104,48 +106,43 @@ export default class Main extends React.Component {
                     data = {this.state.data}
                 />
                 <Row>
-                    <Col>
+                    <Col md={8}>
                         <h1>Text to Handwriting</h1>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
                         <Form>
                             <Form.Group className="mb-3">
                                 <Form.Label>Enter your text here</Form.Label>
                                 <Form.Control as="textarea" rows={10} value={this.state.textData} onChange={(e)=>this.setState({textData: e.target.value})} />
                             </Form.Group>
-                            {this.state.textData !== '' && <>
-                            <Button variant="primary" type="submit" onClick = {this.handleTextSubmit}>
-                                Upload Handwriting
+                            {this.state.textData !== '' && <div className="space-between">
+                            <Button variant="primary" type="submit" onClick = {this.handleTextSubmit} className="buttons">
+                                Upload
                             </Button>
-                            <Button variant="primary" type="submit" onClick = {this.handleConvert}>
+                            {this.state.downloadPdf !== '' && <a href={this.state.downloadPdf} className="btn btn-success buttons" download="converted.pdf"> Download </a>}
+                            <Button variant="primary" type="submit" onClick = {this.handleConvert} className="buttons">
                                 Convert
                             </Button>
-                            </>}
+                            </div>}
                         </Form>
                     </Col>
-                </Row>
-                {this.state.convertedData.length>0 && <Row>
-                    <Col xs={4} className="center-align">
-                        <h3>PDF Preview</h3>
+                    {this.state.convertedData.length >0 && <Col md={4}>
+                        <h2>PDF Preview</h2>
                         <div className="carousel-border">
-                        <Carousel variant="dark">
-                            {this.state.convertedData.map((item, index) => {
-                                return (
-                                    <Carousel.Item key={index}>
-                                        <img
-                                            className="d-block w-100"
-                                            src={item}
-                                            alt="First slide"
-                                        />
-                                    </Carousel.Item>
-                                )
-                            })}
-                        </Carousel>
+                            <Carousel variant="dark">
+                                {this.state.convertedData.map((item, index) => {
+                                    return (
+                                        <Carousel.Item key={index}>
+                                            <img
+                                                className="d-block w-100"
+                                                src={item}
+                                                alt="First slide"
+                                            />
+                                        </Carousel.Item>
+                                    )
+                                })}
+                            </Carousel>
                         </div>
-                    </Col>
-                </Row>}       
+                    </Col>}
+                </Row>
             </Container>
         );
     }
